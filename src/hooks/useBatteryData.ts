@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { fetchData } from '../services/fetchData';
-import { BatteryDataResponse } from '../types/batteryData';
+import { fetchData } from '@services/fetchData';
+import { BatteryDataResponse } from 'types/batteryData';
 
 const useBatteryData = () => {
   const [batteryData, setBatteryData] = useState<BatteryDataResponse | null>(null);
