@@ -6,9 +6,14 @@ export enum TabLabels {
   CELL_QUALITY_ASSURANCE = "Cell Quality Assurance"
 }
 
-export enum GeneralInfoTitles {
+export enum GeneralPageTitles {
   BASIC_SECTION = "Basic Data",
   MODEL_SECTION = "Model Details"
+}
+
+export enum MaterialPageTitles {
+  ELECTROLYTE_SECTION = "Electrolyte Composition",
+  ANODE_SECTION = "Anode Composition"
 }
 
 export enum ScoreTitles {

@@ -6,7 +6,6 @@ interface DonutChartProps {
   height?: number;
   innerRadius?: number;
   outerRadius?: number;
-  colors?: string[];
   label?: boolean;
   title?: string;
 }
@@ -17,13 +16,10 @@ const DonutChart = ({
   height = 400,
   innerRadius = 80,
   outerRadius = 120,
-  colors = ['#FF8042', '#0088FE', '#00C49F', '#FFBB28'],
   label = true,
-  title,
 }: DonutChartProps) => {
   return (
     <div className="flex flex-col justify-center items-center p-4">
-      {title && <h2 className="text-xl font-semibold mb-4">{title}</h2>}
       <div className="flex justify-center items-center">
         <PieChart width={width} height={height}>
           <Pie
@@ -35,8 +31,8 @@ const DonutChart = ({
             fill="#8884d8"
             label={label}
           >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+            {data.map((_, index) => (
+              <Cell key={`cell-${index}`} fill={`rgba(1, 1, 1, ${1 - index * (0.8 / data.length)})`} />
             ))}
           </Pie>
           <Tooltip />

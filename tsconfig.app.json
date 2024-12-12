@@ -17,6 +17,7 @@
       "@hooks/*": ["hooks/*"],
       "@services/*": ["services/*"],
       "@types/*": ["types/*"],
+      "@constants/*": ["constants/*"],
     },
     /* Bundler mode */
     "moduleResolution": "bundler",

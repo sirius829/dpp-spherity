@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TabButton from './Tab'; 
+import TabButton from './Tab';
 
 type Tab = {
   label: string;
@@ -21,9 +21,8 @@ const Tabs = ({ tabs }: TabsProps) => {
     <section>
       <div className="hidden md:flex justify-center align-center">
         <nav
-          className="isolate flex divide-x divide-gray-200 overflow-hidden items-center justify-between rounded-lg border shadow-lg"
+          className="isolate flex divide-x divide-gray-200 overflow-hidden items-center justify-between rounded-lg border shadow-lg w-[89%]"
           aria-label="Tabs"
-          style={{ width: '89%' }}
         >
           {tabs.map((tab, index) => (
             <TabButton
@@ -35,15 +34,7 @@ const Tabs = ({ tabs }: TabsProps) => {
           ))}
         </nav>
       </div>
-      <div 
-        className="mx-auto xs:px-4 sm:px-0 md:max-w-2xl lg:max-w-4xl flex flex-col gap-y-[48px]"
-        style={{
-          position: 'relative',
-          marginTop: '2rem'
-        }}
-      >
-        {tabs[selectedTab].content}
-      </div>
+      {tabs[selectedTab].content}
     </section>
   );
 };
