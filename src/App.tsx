@@ -2,13 +2,10 @@ import useBatteryData from './hooks/useBatteryData';
 import Tabs from './components/tabs/Tabs';
 import Header from './components/header';
 import Footer from './components/footer';
-import DonutChart from '@components/ui/charts/DonutChart';
-import { transformChartDataWithColors } from '@utils/transformChartData';
 import { TabLabels, ScoreTitles, BasicDataTitles, ModelDataTitles } from '@constants/title';
 import { ScoreData, SpecData } from 'types/types';
-import { Material } from 'types/batteryData';
-import { GeneralInformationContent } from '@components/tabContents';
-import MaterialsContent from '@components/tabContents/MaterialsContent';
+import { Material, SupplyChainFile } from 'types/batteryData';
+import { GeneralInformationContent, MaterialsContent, SupplyChainContent } from '@components/tabContents';
 
 interface CellChemistry {
   anodeActiveMaterials: Material[];
@@ -33,9 +30,8 @@ interface CredentialSubject {
   manufacturer?: string;
   location?: string;
   cellChemistry?: CellChemistry;
+  supplyChainFiles?: SupplyChainFile[];
 }
-
-
 
 const App = () => {
   const { batteryData, loading, error } = useBatteryData();
@@ -74,10 +70,12 @@ const App = () => {
   const electrolyteData: Material[] = credentialSubject?.cellChemistry?.electrolyteComposition ?? [];
   const anodeData: Material[] = credentialSubject?.cellChemistry?.anodeActiveMaterials ?? [];
 
+  const supplyChainData: SupplyChainFile[] = credentialSubject?.supplyChainFiles ?? [];
+
   const tabs = [
     { label: TabLabels.GENERAL_INFO, content: <GeneralInformationContent scoreData={scoreData} basicData={basicData} modelData={modelData} /> },
     { label: TabLabels.MATERIAL_CIRCULARITY, content: <MaterialsContent electrolyteData={electrolyteData} anodeData={anodeData} /> },
-    { label: TabLabels.SUPPLY_CHAIN_REPORT, content: "SupplyChain Content" },
+    { label: TabLabels.SUPPLY_CHAIN_REPORT, content: <SupplyChainContent supplyChainData={supplyChainData} /> },
     { label: TabLabels.PERFORMANCE_DURABILITY, content: "Performance content" },
     { label: TabLabels.CELL_QUALITY_ASSURANCE, content: "Cell Quality Assurance content" },
   ];
