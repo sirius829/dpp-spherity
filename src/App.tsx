@@ -4,6 +4,9 @@ import Header from './components/header';
 import Footer from './components/footer';
 import DonutChart from '@components/ui/charts/DonutChart';
 import { transformChartDataWithColors } from '@utils/transformChartData';
+import { TabLabels, ScoreTitles, BasicDataTitles, ModelDataTitles } from './constants';
+import { ScoreData, SpecData } from 'types/types';
+import { GeneralInformationContent } from '@components/tabContents';
 
 const App = () => {
   const { batteryData, loading, error } = useBatteryData();
@@ -56,37 +59,43 @@ const App = () => {
     </div>
   );
 
-  console.log("batteryData", batteryData);
+  const scoreData: ScoreData[] = [
+    { title: ScoreTitles.ESG_SCORE, score: batteryData?.[1].credentialSubject?.esgScore ?? "N/A" },
+    { title: ScoreTitles.DUE_DILIGENCE_SCORE, score: batteryData?.[1].credentialSubject?.dueDiligenceScore ?? "N/A" },
+    { title: ScoreTitles.CARBON_FOOTPRINT_SCORE, score: batteryData?.[1].credentialSubject?.greenhouseGasScore ?? "N/A" },
+  ];
+
+  const basicData: SpecData[] = [
+    { title: BasicDataTitles.MANUFACTURER_ID, specification: batteryData?.[1].credentialSubject?.manufacturerIdentification ?? "N/A" },
+    { title: BasicDataTitles.MANUFACTURING_PLACE, specification: batteryData?.[1].credentialSubject?.manufacturingPlace ?? "N/A" },
+    { title: BasicDataTitles.MANUFACTURING_DATE, specification: batteryData?.[1].credentialSubject?.manufacturingDate ?? "N/A" },
+    { title: BasicDataTitles.BATTERY_CATEGORY, specification: batteryData?.[1].credentialSubject?.batteryCategory ?? "N/A" },
+    { title: BasicDataTitles.BATTERY_WEIGHT, specification: batteryData?.[1].credentialSubject?.batteryWeight ?? "N/A" },
+    { title: BasicDataTitles.LIFE_CYCLE_STATUS, specification: batteryData?.[1].credentialSubject?.lifeCycleStatus ?? "N/A" },
+  ];
+
+  const modelData: SpecData[] = [
+    { title: ModelDataTitles.MODEL, specification: batteryData?.[1].credentialSubject?.batteryModel ?? "N/A" },
+    { title: ModelDataTitles.MANUFACTURER, specification: batteryData?.[1].credentialSubject?.manufacturer ?? "N/A" },
+    { title: ModelDataTitles.LOCATION, specification: batteryData?.[1].credentialSubject?.location ?? "N/A" },
+  ];
 
   const tabs = [
-    { label: "General Information", content: "General Info content" },
+    { label: TabLabels.GENERAL_INFO, content: <GeneralInformationContent scoreData={scoreData} basicData={basicData} modelData={modelData} /> },
     { label: "Materials and circularity", content: "Materials and circularity Content" },
     { label: "Supply chain due diligence report", content: "SupplyChain Content" },
     { label: "Performance and durability", content: "Performance content" },
     { label: "Cell Quality Assurance", content: "Cell Quality Assurance content" },
   ];
 
-  const data = [
-    { name: 'Lithium', value: 25 },
-    { name: 'Graphite', value: 35 },
-    { name: 'Nickel', value: 15 },
-    { name: 'Cobalt', value: 10 },
-    { name: 'Others', value: 15 }
-  ];
+  
+
+  
 
   return (
     <div className="d-flex flex-column h-100">
       <Header />
       <Tabs tabs={tabs} />
-      {/* <DonutChart 
-        data={chartData}
-        width={500}
-        height={500}
-        innerRadius={100}
-        outerRadius={150}
-        colors={colors}
-        title="Electrolyte Composition"
-      /> */}
       <Footer />
     </div>
   )
