@@ -1,5 +1,9 @@
 {
   "files": [],
+  "compilerOptions": {
+    "typeRoots": ["node_modules/@types", "node_modules"],
+    "types": ["react", "react-dom", "react-router-dom", "node"]
+  },
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
