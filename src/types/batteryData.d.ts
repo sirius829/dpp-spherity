@@ -65,6 +65,70 @@ export type CertificationFile = {
   uploadDate: string;
 };
 
+export type CellChemistryData = {
+  anodeActiveMaterials: Material[];
+  anodeCompositionOther: Material[];
+  cathodeActiveMaterials: Material[];
+  cathodeCompositionOther: Material[];
+  electrolyteComposition: Material[];
+  recyclateContentActiveMaterials: Material[];
+};
+
+export type CredentialSubjectData = {
+  id: string;
+  PPAP?: {
+    QAConfirmed: boolean;
+    approvalDate: string;
+  };
+  CTScans?: {
+    impurities: string;
+    anodeOverhang: string;
+    batteryCellScan: BatteryCellScan;
+    housingAndTheCathode: BatteryCellScan;
+    casingCathodeAndAnode: BatteryCellScan;
+    casingAndElectrodeAlignment: string;
+  };
+  batchUUID?: string;
+  cellSampleUUID?: string;
+  performanceMetrics?: PerformanceMetrics;
+  safetyDurabilityTests?: SafetyDurabilityTests;
+  batteryCellHomologation?: BatteryCellHomologation;
+  temperatureToleranceTests?: TemperatureToleranceTests;
+  esgScore?: string;
+  location?: string;
+  voltageMin?: string;
+  batteryModel?: string;
+  manufacturer?: string;
+  batteryWeight?: string;
+  cellChemistry?: CellChemistryData;
+  materialFiles?: MaterialFile[];
+  ratedCapacity?: string;
+  voltageMaximum?: string;
+  voltageNominal?: string;
+  batteryCategory?: string;
+  lifeCycleStatus?: string;
+  supplyChainFiles?: SupplyChainFile[];
+  dueDiligenceScore?: string;
+  manufacturingDate?: string;
+  certificationFiles?: CertificationFile[];
+  expectedLifetimeKm?: string;
+  greenhouseGasScore?: string;
+  manufacturingPlace?: string;
+  chemistryComposition?: string;
+  tripEnergyEfficiency?: string;
+  expectedLifetimeMiles?: string;
+  expectedLifetimeYears?: string;
+  maximumPowerPermitted?: string;
+  cycleLifeReferenceTest?: string;
+  originalPowerCapability?: string;
+  temperatureIdleStateMax?: string;
+  temperatureIdleStateMin?: string;
+  commercialWarrantyPeriod?: string;
+  initialDischargeCapacity?: string;
+  manufacturerIdentification?: string;
+  exhaustionCapacityThreshold?: string;
+};
+
 export type BatteryData = {
   id: string;
   type: string[];
@@ -72,67 +136,7 @@ export type BatteryData = {
   issuer: string;
   "@context": string[];
   issuanceDate: string;
-  credentialSubject: {
-    id: string;
-    PPAP?: {
-      QAConfirmed: boolean;
-      approvalDate: string;
-    };
-    CTScans?: {
-      impurities: string;
-      anodeOverhang: string;
-      batteryCellScan: BatteryCellScan;
-      housingAndTheCathode: BatteryCellScan;
-      casingCathodeAndAnode: BatteryCellScan;
-      casingAndElectrodeAlignment: string;
-    };
-    batchUUID: string;
-    cellSampleUUID: string;
-    performanceMetrics: PerformanceMetrics;
-    safetyDurabilityTests: SafetyDurabilityTests;
-    batteryCellHomologation: BatteryCellHomologation;
-    temperatureToleranceTests: TemperatureToleranceTests;
-    esgScore?: string;
-    location?: string;
-    voltageMin?: string;
-    batteryModel?: string;
-    manufacturer?: string;
-    batteryWeight?: string;
-    cellChemistry?: {
-      anodeActiveMaterials: Material[];
-      anodeCompositionOther: Material[];
-      cathodeActiveMaterials: Material[];
-      cathodeCompositionOther: Material[];
-      electrolyteComposition: Material[];
-      recyclateContentActiveMaterials: Material[];
-    };
-    materialFiles?: MaterialFile[];
-    ratedCapacity?: string;
-    voltageMaximum?: string;
-    voltageNominal?: string;
-    batteryCategory?: string;
-    lifeCycleStatus?: string;
-    supplyChainFiles?: SupplyChainFile[];
-    dueDiligenceScore?: string;
-    manufacturingDate?: string;
-    certificationFiles?: CertificationFile[];
-    expectedLifetimeKm?: string;
-    greenhouseGasScore?: string;
-    manufacturingPlace?: string;
-    chemistryComposition?: string;
-    tripEnergyEfficiency?: string;
-    expectedLifetimeMiles?: string;
-    expectedLifetimeYears?: string;
-    maximumPowerPermitted?: string;
-    cycleLifeReferenceTest?: string;
-    originalPowerCapability?: string;
-    temperatureIdleStateMax?: string;
-    temperatureIdleStateMin?: string;
-    commercialWarrantyPeriod?: string;
-    initialDischargeCapacity?: string;
-    manufacturerIdentification?: string;
-    exhaustionCapacityThreshold?: string;
-  };
+  credentialSubject: CredentialSubjectData;
 };
 
 export type BatteryDataResponse = BatteryData[];

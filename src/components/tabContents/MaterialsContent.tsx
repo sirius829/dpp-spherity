@@ -33,7 +33,7 @@ const MaterialsContent = ({ electrolyteData, anodeData }: MaterialsContentProps)
 					outerRadius={150}
 				/>
 			</MaterialSection>
-			<MaterialSection title={MaterialPageTitles.ELECTROLYTE_SECTION}>
+			<MaterialSection title={MaterialPageTitles.ANODE_SECTION}>
 				<DonutChart
 					data={anodeChartData}
 					width={500}

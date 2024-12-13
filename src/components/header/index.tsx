@@ -1,16 +1,16 @@
 
 const Header = () => {
   return (
-    <header className="bg-transparent mb-16 pt-[96px]">
-      <div className="grid grid-cols-1 xs:grid-cols-1 sm:grid-cols-1 md:grid-cols-2 pr-[32px] xs:pl-[24px] sm:pl-[20px] gap-x-16">
-        <div className="relative flx items-center">
-          <div
-            className="absolute -top-24 left-10 right-1/2 z-10 xs:-top-30 rounded-br-6xl xs:bottom-4 xs:mt-0 xs:right-full xs:-mr-64  xs:left-[-100vw] sm:bottom-16 md:bottom-8 lg:left-[-100vw] md:left-[-100vw] lg:right-full lg:-mr-64"
-            style={{
-              backgroundColor: 'rgb(151, 167, 182)'
-            }}
-          ></div>
-          <div className="relative z-10 mx-auto -top-20  max-h-[1/2] mb-24 sm:mb-0 flex w-[900px] rounded-xl md:w-[900px] lg:w-auto ">
+    <header className="bg-transparent mb-16">
+      <div
+        className="absolute w-1/3 md:h-1/2 h-1/3 rounded-br-[80px] top-0"
+        style={{
+          backgroundColor: 'rgb(151, 167, 182)'
+        }}
+      ></div>
+      <div className="flex md:flex-row flex-col px-5 gap-8 items-center">
+        <div className="relative flex-1 items-center">
+          <div className="relative z-10 max-h-[1/2] sm:mb-0 flex rounded-xl w-auto max-w-[900px]">
             <img
               src="https://acme.dpp.spherity.com/_next/static/media/EV-battery2.e7184af4.png"
               className="w-full h-full rounded-xl"
@@ -19,7 +19,7 @@ const Header = () => {
             </img>
           </div>
         </div>
-        <div className="relative items-left justify-left mt-4 sm:pl-4 flex flex-col gap-y-[10px]">
+        <div className="relative flex-1 mt-4 sm:pl-4 flex flex-col gap-y-[10px]">
           <img
             src="https://cdn.freebiesupply.com/logos/large/2x/acme-1-logo-png-transparent.png"
             className="h-16 w-fit"
@@ -45,10 +45,9 @@ const Header = () => {
                 <p className="text-xs font-inter">Powered by</p>
                 <div className="flex flex-row">
                   <img
+                    className="md:h-28 h-16"
                     alt=""
                     src="https://vera-staging.dpp.spherity.dev/_next/static/media/spherity-logo.8fb53ba2.png"
-                    width='377'
-                    height='50'
                   ></img>
                 </div>
               </div>
@@ -56,7 +55,6 @@ const Header = () => {
           </div>
         </div>
       </div>
-
     </header>
   )
 };

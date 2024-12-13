@@ -1,8 +1,8 @@
 import FileTableRow from './FileTableRow';
-import { SupplyChainFile } from 'types/batteryData';
+import { FileData } from 'types/types';
 
 interface FileTableProps {
-  data: SupplyChainFile[];
+  data: FileData[];
 }
 
 const FileTable = ({ data }: FileTableProps) => {

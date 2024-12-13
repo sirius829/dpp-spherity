@@ -9,7 +9,7 @@ interface GeneralInformationContentProps {
 	modelData: SpecData[];
 }
 
-const GeneralInformationContent = ({ scoreData, basicData, modelData }: GeneralInformationContentProps) => {
+const GeneralInfoContent = ({ scoreData, basicData, modelData }: GeneralInformationContentProps) => {
 	return (
 		<div className="mx-auto xs:px-4 sm:px-0 md:max-w-2xl lg:max-w-4xl flex flex-col gap-y-[48px] relative mt-8">
 			<ScoreSection title={""} >
@@ -31,4 +31,4 @@ const GeneralInformationContent = ({ scoreData, basicData, modelData }: GeneralI
 	);
 };
 
-export default GeneralInformationContent;
+export default GeneralInfoContent;

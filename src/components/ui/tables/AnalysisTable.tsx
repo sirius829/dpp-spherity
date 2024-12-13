@@ -1,7 +1,4 @@
-interface AnalysisTableRow {
-  label: string;
-  value: string;
-}
+import { AnalysisTableRow } from "types/types";
 
 interface AnalysisTableProps {
   rows: AnalysisTableRow[];
@@ -9,7 +6,7 @@ interface AnalysisTableProps {
 
 const AnalysisTable = ({ rows }: AnalysisTableProps) => {
   return (
-    <table className="shadow table-fixed w-full">
+    <table className="shadow table-fixed">
       <tbody>
         {rows.map((row, index) => (
           <tr key={index} className={index % 2 === 0 ? "odd:bg-gray-50" : ""}>

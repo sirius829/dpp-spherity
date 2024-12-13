@@ -1,4 +1,4 @@
-export const useScoreColor = (scoreOrGrade: number | string): { colorClass: string; caption: string } => {
+export const useScoreColor = (scoreOrGrade: number | string | undefined): { colorClass: string; caption: string } => {
   const gradeColors: { [key: string]: { colorClass: string; caption: string } } = {
     A: { colorClass: 'text-green-600 bg-green-600', caption: 'Excellent' },
     B: { colorClass: 'text-green-400 bg-green-400', caption: 'Good' },

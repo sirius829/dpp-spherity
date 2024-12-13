@@ -2,36 +2,11 @@ import useBatteryData from './hooks/useBatteryData';
 import Tabs from './components/tabs/Tabs';
 import Header from './components/header';
 import Footer from './components/footer';
-import { TabLabels, ScoreTitles, BasicDataTitles, ModelDataTitles } from '@constants/title';
-import { ScoreData, SpecData } from 'types/types';
-import { Material, SupplyChainFile } from 'types/batteryData';
-import { GeneralInformationContent, MaterialsContent, SupplyChainContent } from '@components/tabContents';
-
-interface CellChemistry {
-  anodeActiveMaterials: Material[];
-  anodeCompositionOther: Material[];
-  cathodeActiveMaterials: Material[];
-  cathodeCompositionOther: Material[];
-  electrolyteComposition: Material[];
-  recyclateContentActiveMaterials: Material[];
-}
-
-interface CredentialSubject {
-  esgScore?: string;
-  dueDiligenceScore?: string;
-  greenhouseGasScore?: string;
-  manufacturerIdentification?: string;
-  manufacturingPlace?: string;
-  manufacturingDate?: string;
-  batteryCategory?: string;
-  batteryWeight?: string;
-  lifeCycleStatus?: string;
-  batteryModel?: string;
-  manufacturer?: string;
-  location?: string;
-  cellChemistry?: CellChemistry;
-  supplyChainFiles?: SupplyChainFile[];
-}
+import { TabLabels, ScoreTitles, BasicDataTitles, ModelDataTitles, PerformanceDataTitles, TestDataTitles } from '@constants/title';
+import { ScoreData, SpecData, AnalysisTableRow } from 'types/types';
+import { Material, SupplyChainFile, CredentialSubjectData } from 'types/batteryData';
+import { GeneralInfoContent, MaterialsContent, SupplyChainContent, PerformanceContent } from '@components/tabContents';
+import CellQAContent from '@components/tabContents/CellQAContent';
 
 const App = () => {
   const { batteryData, loading, error } = useBatteryData();
@@ -44,48 +19,101 @@ const App = () => {
     </div>
   );
 
-  const credentialSubject: CredentialSubject = batteryData?.[1].credentialSubject ?? {};
+  const credentialSubject: CredentialSubjectData = batteryData?.[1].credentialSubject ?? {id: "N/A"};
 
+  // General Information data
   const scoreData: ScoreData[] = [
-    { title: ScoreTitles.ESG_SCORE, score: credentialSubject?.esgScore ?? "N/A" },
-    { title: ScoreTitles.DUE_DILIGENCE_SCORE, score: credentialSubject?.dueDiligenceScore ?? "N/A" },
-    { title: ScoreTitles.CARBON_FOOTPRINT_SCORE, score: credentialSubject?.greenhouseGasScore ?? "N/A" },
+    { title: ScoreTitles.ESG_SCORE, score: credentialSubject?.esgScore },
+    { title: ScoreTitles.DUE_DILIGENCE_SCORE, score: credentialSubject?.dueDiligenceScore },
+    { title: ScoreTitles.CARBON_FOOTPRINT_SCORE, score: credentialSubject?.greenhouseGasScore },
   ];
 
   const basicData: SpecData[] = [
-    { title: BasicDataTitles.MANUFACTURER_ID, specification: credentialSubject?.manufacturerIdentification ?? "N/A" },
-    { title: BasicDataTitles.MANUFACTURING_PLACE, specification: credentialSubject?.manufacturingPlace ?? "N/A" },
-    { title: BasicDataTitles.MANUFACTURING_DATE, specification: credentialSubject?.manufacturingDate ?? "N/A" },
-    { title: BasicDataTitles.BATTERY_CATEGORY, specification: credentialSubject?.batteryCategory ?? "N/A" },
-    { title: BasicDataTitles.BATTERY_WEIGHT, specification: credentialSubject?.batteryWeight ?? "N/A" },
-    { title: BasicDataTitles.LIFE_CYCLE_STATUS, specification: credentialSubject?.lifeCycleStatus ?? "N/A" },
+    { title: BasicDataTitles.MANUFACTURER_ID, specification: credentialSubject?.manufacturerIdentification },
+    { title: BasicDataTitles.MANUFACTURING_PLACE, specification: credentialSubject?.manufacturingPlace },
+    { title: BasicDataTitles.MANUFACTURING_DATE, specification: credentialSubject?.manufacturingDate },
+    { title: BasicDataTitles.BATTERY_CATEGORY, specification: credentialSubject?.batteryCategory },
+    { title: BasicDataTitles.BATTERY_WEIGHT, specification: credentialSubject?.batteryWeight },
+    { title: BasicDataTitles.LIFE_CYCLE_STATUS, specification: credentialSubject?.lifeCycleStatus },
   ];
 
   const modelData: SpecData[] = [
-    { title: ModelDataTitles.MODEL, specification: credentialSubject?.batteryModel ?? "N/A" },
-    { title: ModelDataTitles.MANUFACTURER, specification: credentialSubject?.manufacturer ?? "N/A" },
-    { title: ModelDataTitles.LOCATION, specification: credentialSubject?.location ?? "N/A" },
+    { title: ModelDataTitles.MODEL, specification: credentialSubject?.batteryModel },
+    { title: ModelDataTitles.MANUFACTURER, specification: credentialSubject?.manufacturer },
+    { title: ModelDataTitles.LOCATION, specification: credentialSubject?.location },
   ];
 
+  // Materials and circularity data
   const electrolyteData: Material[] = credentialSubject?.cellChemistry?.electrolyteComposition ?? [];
   const anodeData: Material[] = credentialSubject?.cellChemistry?.anodeActiveMaterials ?? [];
 
+  // Supply chain due diligence report data
   const supplyChainData: SupplyChainFile[] = credentialSubject?.supplyChainFiles ?? [];
 
+  // Performance and durability data
+  const performanceData: SpecData[] = [
+    { title: PerformanceDataTitles.RATED_CAPACITY, specification: `${credentialSubject?.ratedCapacity} Ah`},
+    { title: PerformanceDataTitles.MAX_POWER_PERMITTED, specification: `${credentialSubject?.maximumPowerPermitted} kW`},
+    { title: PerformanceDataTitles.ORIGIN_POWER_CAPABILITY, specification: `${credentialSubject?.originalPowerCapability} kW`},
+    { title: PerformanceDataTitles.VOLT_NOMINAL, specification: `${credentialSubject?.voltageNominal} V`},
+    { title: PerformanceDataTitles.VOLT_MIN, specification: `${credentialSubject?.voltageMin} V`},
+    { title: PerformanceDataTitles.VOLT_MAX, specification: `${credentialSubject?.voltageMaximum} V`},
+    { title: PerformanceDataTitles.PACK_INIT_DISCHARGE_CAPACITY, specification: `${credentialSubject?.initialDischargeCapacity} Ah`},
+    { title: PerformanceDataTitles.CAPACITY_THRESHOLD, specification: `${credentialSubject?.exhaustionCapacityThreshold} %`},
+    { title: PerformanceDataTitles.EXPECTED_LIFETIME_YEAR, specification: `${credentialSubject?.expectedLifetimeYears} yers`},
+    { title: PerformanceDataTitles.EXPECTED_LIFETIME_MILE, specification: credentialSubject?.expectedLifetimeMiles },
+    { title: PerformanceDataTitles.EXPECTED_LIFETIME_KM, specification: credentialSubject?.expectedLifetimeKm },
+    { title: PerformanceDataTitles.COMMERCIAL_WARRANTY_PERIOD, specification: `${credentialSubject?.commercialWarrantyPeriod} years`},
+    { title: PerformanceDataTitles.TEMPERATURE_RANGE_MIN, specification: `${credentialSubject?.temperatureIdleStateMin} 'C`},
+    { title: PerformanceDataTitles.TEMPERATURE_RANGE_MAX, specification: `${credentialSubject?.temperatureIdleStateMax} 'C`},
+    { title: PerformanceDataTitles.CYCLE_LIFE_REF_TEST, specification: credentialSubject?.cycleLifeReferenceTest },
+    { title: PerformanceDataTitles.TRIP_ENERGY_EFFICIENCY, specification: credentialSubject?.tripEnergyEfficiency },
+  ];
+
+  // Cell Quality Assurance data
+  const sampleIdData: AnalysisTableRow[] = [
+    { label: TestDataTitles.BATCH_UUID, value: batteryData?.[0].credentialSubject?.batchUUID },
+    { label: TestDataTitles.CELL_SAMP_UUID, value: batteryData?.[0].credentialSubject?.cellSampleUUID },
+  ];
+
+  const temperatureTestsData: AnalysisTableRow[] = [
+    { label: TestDataTitles.OPERATING_RANGE, value: batteryData?.[0].credentialSubject?.temperatureToleranceTests?.operatingRange },
+    { label: TestDataTitles.THERMAL_STABILITY, value: batteryData?.[0].credentialSubject?.temperatureToleranceTests?.thermalStability },
+    { label: TestDataTitles.COOLING_EFFICIENCY, value: batteryData?.[0].credentialSubject?.temperatureToleranceTests?.coolingEfficiency },
+  ];
+
+  const performMetricsData: AnalysisTableRow[] = [
+    { label: TestDataTitles.OPERATING_RANGE, value: batteryData?.[0].credentialSubject?.performanceMetrics?.capacityRetention },
+    { label: TestDataTitles.THERMAL_STABILITY, value: batteryData?.[0].credentialSubject?.performanceMetrics?.energyDensity },
+    { label: TestDataTitles.COOLING_EFFICIENCY, value: batteryData?.[0].credentialSubject?.performanceMetrics?.chargeDischargeRate },
+  ];
+
+  const safeTestsData: AnalysisTableRow[] = [
+    { label: TestDataTitles.OPERATING_RANGE, value: batteryData?.[0].credentialSubject?.safetyDurabilityTests?.shortCircuitResistance },
+    { label: TestDataTitles.THERMAL_STABILITY, value: batteryData?.[0].credentialSubject?.safetyDurabilityTests?.vibrationShock },
+    { label: TestDataTitles.COOLING_EFFICIENCY, value: batteryData?.[0].credentialSubject?.safetyDurabilityTests?.lifeCycle },
+  ];
+
+  const keyFindingData: AnalysisTableRow[] = [
+    { label: TestDataTitles.IMPURITIES, value: batteryData?.[0].credentialSubject?.CTScans?.impurities },
+    { label: TestDataTitles.ANODE_OVERHANG, value: batteryData?.[0].credentialSubject?.CTScans?.anodeOverhang },
+    { label: TestDataTitles.CASING_ELECTRODE_ALIGNS, value: batteryData?.[0].credentialSubject?.CTScans?.casingAndElectrodeAlignment },
+  ];
+
   const tabs = [
-    { label: TabLabels.GENERAL_INFO, content: <GeneralInformationContent scoreData={scoreData} basicData={basicData} modelData={modelData} /> },
+    { label: TabLabels.GENERAL_INFO, content: <GeneralInfoContent scoreData={scoreData} basicData={basicData} modelData={modelData} /> },
     { label: TabLabels.MATERIAL_CIRCULARITY, content: <MaterialsContent electrolyteData={electrolyteData} anodeData={anodeData} /> },
     { label: TabLabels.SUPPLY_CHAIN_REPORT, content: <SupplyChainContent supplyChainData={supplyChainData} /> },
-    { label: TabLabels.PERFORMANCE_DURABILITY, content: "Performance content" },
-    { label: TabLabels.CELL_QUALITY_ASSURANCE, content: "Cell Quality Assurance content" },
+    { label: TabLabels.PERFORMANCE_DURABILITY, content: <PerformanceContent performanceData={performanceData} /> },
+    { label: TabLabels.CELL_QUALITY_ASSURANCE, content: <CellQAContent sampleIdData={sampleIdData} temperatureTestsData={temperatureTestsData} performMetricsData={performMetricsData} safeTestsData={safeTestsData} keyFindingData={keyFindingData} /> },
   ];
 
    return (
-    <div className="d-flex flex-column h-100">
+    <>
       <Header />
       <Tabs tabs={tabs} />
       <Footer />
-    </div>
+    </>
   )
 }
 

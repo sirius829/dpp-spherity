@@ -1,6 +1,6 @@
 interface SpecCardProps {
   title: string;
-  description: string;
+  description?: string;
 }
 
 const SpecCard = ({ title, description }: SpecCardProps) => {
