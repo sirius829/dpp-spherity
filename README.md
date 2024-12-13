@@ -82,7 +82,7 @@ Implement interactive elements such as:
 
 1. Clone this repository:
     ```bash
-    git clone https://github.com/your-username/digital-product-passport.git
+    git clone https://github.com/sirius829/digital-product-passport.git
     ```
 
 2. Install dependencies:
@@ -96,18 +96,40 @@ Implement interactive elements such as:
     npm start
     ```
 
-4. Open the application in your browser at [http://localhost:3000](http://localhost:3000).
+4. Open the application in your browser at [http://localhost:5173](http://localhost:5173).
+
+---
+
+## Summary of Approach
+
+### 1. **Data Handling and API Integration**
+
+- Fetched data using Fetch API.
+- Implemented error handling for network issues and invalid responses.
+
+### 2. **Component Design**
+
+- Created reusable and modular components for charts, tables, cards, and visualizations.
+
+### 3. **Responsive Design**
+
+- Used Tailwind CSS for a clean and responsive layout
+
+### 4. **Interactivity**
+
+- Added dynamic charts, tabs, dropdown list to enhance usability
 
 ---
 
 ## Libraries Used
 
 - **React**: For building the user interface.
-- **Axios**: For fetching data from the API.
-- **Tailwind CSS**: For styling the application (optional).
+- **Vite**: For a fast development environment.
+- **TypeScript**: For type-safe development.
+- **Tailwind CSS**: For styling the application.
+- **Recharts**: For dynamic data visualization.
 
 ---
 
-## License
+## Live Demo
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
